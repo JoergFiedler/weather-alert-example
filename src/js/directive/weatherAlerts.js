@@ -1,8 +1,8 @@
 "use strict";
 
 function weatherAlertsController($scope, $timeout, weatherApiService) {
-  $scope.name;
-  $scope.interval;
+  $scope.name = "";
+  $scope.interval = "";
   var timeoutPromise;
 
   function handleResponse(data) {
@@ -19,7 +19,7 @@ function weatherAlertsController($scope, $timeout, weatherApiService) {
 
   function scheduleRequest() {
     requestAlerts();
-    timeoutPromise = $timeout( scheduleRequest, $scope.interval);
+    timeoutPromise = $timeout( scheduleRequest, $scope.interval*1000);
   }
 
   function schedule() {

@@ -10,6 +10,6 @@ describe("Api Url Builder", function() {
 
   it("Creates a query string from params", function() {
     var query = service.create({ name: "Berlin" });
-    expect(query).toEqual("http://domain.tld?product=alerts&app_id=id&app_code=code&name=Berlin");
+    expect(query).toEqual("http://domain.tld?product=alerts&app_id=id&app_code=code&jsonpcallback=JSON_CALLBACK&name=Berlin");
   });
 });
