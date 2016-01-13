@@ -1,9 +1,12 @@
 "use strict";
 
-function weatherApiService($http, querStringBuilder) {
+function weatherApiService($http, apiUrlBuilder) {
 
   function getAlerts(name) {
-    $http.get();
+    return $http({
+      url: apiUrlBuilder.create({name: name}),
+      method: 'JSONP'
+    })
   }
 
   return {

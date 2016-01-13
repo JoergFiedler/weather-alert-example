@@ -2,19 +2,7 @@ doctype
 html(lang="en" data-ng-app="weatherAlerts")
   body
     h1 Weather Alerts
-    p
-      | Enter city name and check interval to get notified of any severe weather conditions.
-    .input-group
-      input#city.textfield-200(placeHolder="City Name")
-      input#interval.textfield-75(placeHolder="Check Interval")
-    .weather-alerts
-      .caption
-        United States, Oregon, Altomont
-      .weather-alert
-        .header Snow advisory, 13
-        .alert Wednesday, Evening
-        .alert Tuesday, Afternoon
-        .alert Tuesday, Evening
+    .input-group(data-weather-alerts)
   script(src="/js/bundle.js")
 //
   {"alerts":{
