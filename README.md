@@ -2,7 +2,7 @@ Nothing fancy.
 
 Sample project to demonstrate how to use [here.com Weather API](https://developer.here.com/rest-apis/documentation/weather/topics/user-guide.html) using Angular.
 
-This is a gulp based project. So please make sure you have {node|io|js installed.
+This is a gulp based project. So please make sure you have {node|io}js installed.
 
 Run the following command and follow the instructions on the screen.
 
