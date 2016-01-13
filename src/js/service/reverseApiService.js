@@ -29,6 +29,7 @@ function reverseApiService($http, $q, reverseApiUrl, apiUrlBuilder) {
                mode: "retrieveAreas",
                level: "city",
                maxResults: "10",
+               gen: "8",
                locationattributes: "address",
                jsoncallback: "JSON_CALLBACK",
                app_id: "hzVubB90T6SNl96pONJv",
