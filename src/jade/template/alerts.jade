@@ -11,10 +11,13 @@ form(name="weatherForm")
                               data-ng-change="schedule()",
                               data-ng-model-options="{debounce: 500}",
                               data-ng-model="interval")
+  .error-message(data-ng-show="status!==200") Api status: {{ status }}
   .weather-alerts(data-ng-hide="!alerts")
     .caption
-      p {{:: alerts.country }}, {{:: alerts.state }}, {{:: alerts.city }}
+      p {{ alerts.alerts }}
+      p {{ alerts.country }}, {{ alerts.state }}, {{ alerts.city }}
     .alert(data-ng-repeat="alert in alerts.alerts")
-      .type {{:: alert.description}}, {{:: alert.type }}
+      .type {{ alert.description}}, {{ alert.type }}
       .times(data-ng-repeat="time in alert.timeSegment")
-        .alert {{:: time.day_of_week | dayOfWeek }}, {{:: time.segment | segment }}
+        .alert {{ time.day_of_week | dayOfWeek }}, {{ time.segment | segment }}
+    .message(data-ng-show="alerts.alerts.length===0") No need to be scared. No alerts ahead. Enjoy!
