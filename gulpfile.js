@@ -1,19 +1,24 @@
 var gulp = require("gulp");
 var del = require("del");
 var browserSync = require('browser-sync');
+var gutil = require("gulp-util");
+var browserify = require('browserify');
 var reload = browserSync.reload;
 var jade = require("gulp-jade");
+var source = require('vinyl-source-stream');
 
 var conf = {
     jade : {
       pretty : true
     },
     src : {
+      app: "./src/js/app.js",
       jade: "./src/jade/**/*.jade"
     },
     dest : {
       base: "./dist",
-      html: "./dist"
+      html: "./dist",
+      js: "./dist/js"
     }
 }
 
@@ -43,7 +48,16 @@ gulp.task("serve", function() {
     gulp.watch(conf.src.jade, ["jade"]);
 });
 
-gulp.task("default", ["jade", "serve"], function(done) {
+gulp.task("browserify",function() {
+  return browserify(conf.src.app)
+    .bundle()
+    .on("error", errorHandler)
+    .pipe(source("bundle.js"))
+    .pipe(gulp.dest(conf.dest.js))
+    .pipe(reload({ stream: true }));
+});
+
+gulp.task("default", ["browserify", "jade", "serve"], function(done) {
   done();
 });
 
