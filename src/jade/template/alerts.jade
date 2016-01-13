@@ -2,10 +2,12 @@ p
   | Enter city name and check interval to get notified of any severe weather conditions.
 input#city.textfield-200(placeHolder="City Name",
                          data-ng-change="requestAlerts()",
-                         data-ng-model-options="{debounce: 250}",
+                         data-ng-model-options="{debounce: 500}",
                          data-ng-model="name")
-input#interval.textfield-75(placeHolder="Check Interval"
-                                  data-ng-model="interval")
+input#interval.textfield-75(placeHolder="Check Interval (sec)"
+                            data-ng-change="schedule()"
+                            data-ng-model-options="{debounce: 500}",
+                            data-ng-model="interval")
 .weather-alerts(data-ng-hide="!response")
   .caption
     p {{:: response.alerts.country }}, {{:: response.alerts.state }}, {{:: response.alerts.city }}
