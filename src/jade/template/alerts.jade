@@ -1,17 +1,20 @@
 p
   | Enter city name and check interval to get notified of any severe weather conditions.
-input#city.textfield-200(placeHolder="City Name",
-                         data-ng-change="requestAlerts()",
-                         data-ng-model-options="{debounce: 500}",
-                         data-ng-model="name")
-input#interval.textfield-75(placeHolder="Check Interval (sec)"
-                            data-ng-change="schedule()"
-                            data-ng-model-options="{debounce: 500}",
-                            data-ng-model="interval")
-.weather-alerts(data-ng-hide="!alerts")
-  .caption
-    p {{:: alerts.country }}, {{:: alerts.state }}, {{:: alerts.city }}
-  .alert(data-ng-repeat="alert in alerts.alerts")
-    .type {{:: alert.description}}, {{:: alert.type }}
-    .times(data-ng-repeat="time in alert.timeSegment")
-      .alert {{:: time.day_of_week | dayOfWeek }}, {{:: time.segment | segment }}
+form(name="weatherForm")
+  input#city.textfield-200(placeHolder="WKT Name",
+                           data-ng-change="requestAlerts()",
+                           data-ng-model-options="{debounce: 500}",
+                           data-ng-model="name")
+  input#interval.textfield-75(type="number",
+                              placeHolder="Check Interval (sec, min: 5)",
+                              data-ng-min="5",
+                              data-ng-change="schedule()",
+                              data-ng-model-options="{debounce: 500}",
+                              data-ng-model="interval")
+  .weather-alerts(data-ng-hide="!alerts")
+    .caption
+      p {{:: alerts.country }}, {{:: alerts.state }}, {{:: alerts.city }}
+    .alert(data-ng-repeat="alert in alerts.alerts")
+      .type {{:: alert.description}}, {{:: alert.type }}
+      .times(data-ng-repeat="time in alert.timeSegment")
+        .alert {{:: time.day_of_week | dayOfWeek }}, {{:: time.segment | segment }}
