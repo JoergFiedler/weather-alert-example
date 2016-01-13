@@ -6,6 +6,7 @@ var browserify = require('browserify');
 var reload = browserSync.reload;
 var jade = require("gulp-jade");
 var source = require('vinyl-source-stream');
+var Karma = require('karma').Server;
 
 var conf = {
     jade : {
@@ -13,7 +14,8 @@ var conf = {
     },
     src : {
       app: "./src/js/app.js",
-      jade: "./src/jade/**/*.jade"
+      jade: "./src/jade/**/*.jade",
+      js: "./src/js/**/*.js"
     },
     dest : {
       base: "./dist",
@@ -29,6 +31,15 @@ errorHandler = function(err) {
   gutil.log(gutil.colors.red(message));
   this.emit("end");
 };
+
+gulp.task("test", ["browserify"], function(done) {
+  new Karma(
+    {
+      configFile: __dirname + '/karma.conf.js'
+    },
+    done
+  ).start();
+});
 
 gulp.task("jade", function() {
   return gulp.src(conf.src.jade)
@@ -46,6 +57,7 @@ gulp.task("serve", function() {
     });
 
     gulp.watch(conf.src.jade, ["jade"]);
+    gulp.watch(conf.src.js, ["browserify"]);
 });
 
 gulp.task("browserify",function() {
