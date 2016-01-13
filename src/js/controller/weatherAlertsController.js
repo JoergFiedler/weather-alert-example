@@ -5,18 +5,24 @@ function weatherAlertsController($scope, $timeout, weatherApiService) {
   $scope.name = "";
   $scope.interval = "";
 
-  function handleResponse(response) {
-    if ( response.status === 200 ) {
-      $scope.alerts = response.data.alerts;
-    }
-    $scope.status = response.status;
+  function handleResponse(alertsPerCity) {
+    $scope.cities = alertsPerCity.filter(function(cityAlert){
+      return cityAlert.status === 200;
+    }).map(function(cityAlert){
+      return cityAlert.data.alerts;
+    });
+  }
+
+  function handleErrorResponse(response) {
+    $scope.errors = JSON.stringify(response.data);
   }
 
   function requestAlerts() {
     if ($scope.weatherForm.$valid === true) {
+      $scope.errors = "";
       weatherApiService
-        .getAlerts($scope.name)
-        .then(handleResponse, handleResponse);
+        .getAlerts($scope.lat, $scope.lng, $scope.radius)
+        .then(handleResponse, handleErrorResponse);
     }
   }
 

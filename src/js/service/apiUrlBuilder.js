@@ -1,12 +1,6 @@
 "use strict";
 
-function apiUrlBuilder(apiUrl, product, appId, appCode) {
-  var baseParams = {
-    product: product,
-    app_id: appId,
-    app_code: appCode,
-    jsonpcallback: "JSON_CALLBACK"
-  }
+function apiUrlBuilder() {
   var baseUrl;
 
   function mapToString(params) {
@@ -15,13 +9,13 @@ function apiUrlBuilder(apiUrl, product, appId, appCode) {
     }).join('&');
   }
 
-  function create(params) {
-    return baseUrl + "&" + mapToString(params);
+  function create(apiUrl, params) {
+    return apiUrl + "?" + mapToString(params);
   }
 
-  baseUrl = apiUrl + "?" + mapToString(baseParams);
-
-  return { create: create };
+  return {
+    create: create
+  };
 }
 
 module.exports = apiUrlBuilder;

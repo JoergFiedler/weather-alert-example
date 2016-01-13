@@ -1,22 +1,38 @@
 p
   | Enter city name and check interval to get notified of any severe weather conditions.
 form(name="weatherForm")
-  input#city.textfield-200(placeHolder="WKT Name",
-                           data-ng-change="requestAlerts()",
-                           data-ng-model-options="{debounce: 500}",
-                           data-ng-model="name")
+  input#lat.textfield-75(type="number"
+                         placeHolder="Latitude",
+                         data-ng-change="requestAlerts()",
+                         data-ng-model-options="{debounce: 500}",
+                         data-ng-model="lat",
+                         required)
+  input#lng.textfield-75(type="number"
+                         placeHolder="Longitude",
+                         data-ng-change="requestAlerts()",
+                         data-ng-model-options="{debounce: 500}",
+                         data-ng-model="lng",
+                         required)
+  input#lng.textfield-75(type="number"
+                         placeHolder="Radius (m)",
+                         data-ng-change="requestAlerts()",
+                         data-ng-model-options="{debounce: 500}",
+                         data-ng-model="radius"
+                         required)
   input#interval.textfield-75(type="number",
                               placeHolder="Check Interval (sec, min: 5)",
                               data-ng-min="5",
                               data-ng-change="schedule()",
                               data-ng-model-options="{debounce: 500}",
                               data-ng-model="interval")
-  .error-message(data-ng-show="status>=400") Api status: {{ status }}
-  .weather-alerts(data-ng-hide="!alerts")
-    .caption
-      p {{ alerts.country }}, {{ alerts.state }}, {{ alerts.city }}
-    .alert(data-ng-repeat="alert in alerts.alerts")
-      .type {{ alert.description}}, {{ alert.type }}
-      .times(data-ng-repeat="time in alert.timeSegment")
-        .alert {{ time.day_of_week | dayOfWeek }}, {{ time.segment | segment }}
-    .message(data-ng-show="alerts.alerts.length===0") No need to be scared. No alerts ahead. Enjoy!
+  .error-message(data-ng-show="error") An error occured: {{ error }}
+  .no-cities(data-ng-show="cities.length===0") No cities found for lat,lng,radius. 
+  .weather-alerts(data-ng-hide="cities.length===0")
+    .city(data-ng-repeat="city in cities")
+      .caption
+        p {{ city.country }}, {{ city.state }}, {{ city.city }}
+      .alert(data-ng-repeat="alert in city.alerts")
+        .type {{ alert.description}}, {{ alert.type }}
+        .times(data-ng-repeat="time in alert.timeSegment")
+          .alert {{ time.day_of_week | dayOfWeek }}, {{ time.segment | segment }}
+      .message(data-ng-show="city.alerts.length===0") No need to be scared. No alerts ahead. Enjoy!

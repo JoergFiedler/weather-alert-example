@@ -5,11 +5,11 @@ describe("Api Url Builder", function() {
 
   beforeEach(function() {
     var urlBuilder = require("../../../src/js/service/apiUrlBuilder");
-    service = new urlBuilder("http://domain.tld", "alerts", "id", "code");
+    service = new urlBuilder();
   });
 
   it("Creates a query string from params", function() {
-    var query = service.create({ name: "Berlin" });
-    expect(query).toEqual("http://domain.tld?product=alerts&app_id=id&app_code=code&jsonpcallback=JSON_CALLBACK&name=Berlin");
+    var query = service.create("http://domain.tld", { name: "Berlin" });
+    expect(query).toEqual("http://domain.tld?name=Berlin");
   });
 });
