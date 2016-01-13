@@ -11,10 +11,9 @@ form(name="weatherForm")
                               data-ng-change="schedule()",
                               data-ng-model-options="{debounce: 500}",
                               data-ng-model="interval")
-  .error-message(data-ng-show="status!==200") Api status: {{ status }}
+  .error-message(data-ng-show="status>=400") Api status: {{ status }}
   .weather-alerts(data-ng-hide="!alerts")
     .caption
-      p {{ alerts.alerts }}
       p {{ alerts.country }}, {{ alerts.state }}, {{ alerts.city }}
     .alert(data-ng-repeat="alert in alerts.alerts")
       .type {{ alert.description}}, {{ alert.type }}
