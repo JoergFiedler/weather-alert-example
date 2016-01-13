@@ -8,10 +8,10 @@ input#interval.textfield-75(placeHolder="Check Interval (sec)"
                             data-ng-change="schedule()"
                             data-ng-model-options="{debounce: 500}",
                             data-ng-model="interval")
-.weather-alerts(data-ng-hide="!response")
+.weather-alerts(data-ng-hide="!alerts")
   .caption
-    p {{:: response.alerts.country }}, {{:: response.alerts.state }}, {{:: response.alerts.city }}
-  .alert(data-ng-repeat="alert in response.alerts.alerts")
+    p {{:: alerts.country }}, {{:: alerts.state }}, {{:: alerts.city }}
+  .alert(data-ng-repeat="alert in alerts.alerts")
     .type {{:: alert.description}}, {{:: alert.type }}
     .times(data-ng-repeat="time in alert.timeSegment")
-      .alert {{:: time.day_of_week }}, {{:: time.segment }}
+      .alert {{:: time.day_of_week | dayOfWeek }}, {{:: time.segment | segment }}

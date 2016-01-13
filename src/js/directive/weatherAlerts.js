@@ -6,18 +6,20 @@ function weatherAlertsController($scope, $timeout, weatherApiService) {
   var timeoutPromise;
 
   function handleResponse(data) {
-    $scope.response = {"alerts":{"alerts":[{"timeSegment":[{"value":"","segment":"E","otherAttributes":{},"day_of_week":"4"},{"value":"","segment":"A","otherAttributes":{},"day_of_week":"5"},{"value":"","segment":"E","otherAttributes":{},"day_of_week":"5"}],"type":"13","description":"Snow advisory"}],"country":"United States","state":"Oregon","city":"Altamont","latitude":42.20681,"longitude":-121.73722,"timezone":-8},"feedCreation":"2016-01-13T11:48:19.393Z","metric":true}
+    $scope.alerts = {"alerts":[{"timeSegment":[{"value":"","segment":"E","otherAttributes":{},"day_of_week":"4"},{"value":"","segment":"A","otherAttributes":{},"day_of_week":"5"},{"value":"","segment":"E","otherAttributes":{},"day_of_week":"5"}],"type":"13","description":"Snow advisory"}],"country":"United States","state":"Oregon","city":"Altamont","latitude":42.20681,"longitude":-121.73722,"timezone":-8}
   }
 
   function requestAlerts() {
-    weatherApiService.getAlerts("Altamont").then(handleResponse, handleResponse);
+    if ($scope.name !== "") {
+      weatherApiService
+        .getAlerts($scope.name)
+        .then(handleResponse, handleResponse);
+    }
   }
 
   function scheduleRequest() {
-    timeoutPromise = $timeout(function() {
-      requestAlerts();
-      scheduleRequest();
-    }, $scope.interval);
+    requestAlerts();
+    timeoutPromise = $timeout( scheduleRequest, $scope.interval);
   }
 
   function schedule() {
@@ -35,8 +37,7 @@ function weatherAlerts(weatherApiService) {
     scope: true,
     templateUrl: "/template/alerts.html",
     controller: weatherAlertsController,
-    link: function($scope, element, attrs) {
-    }
+    link: function($scope, element, attrs) {}
   };
 }
 
