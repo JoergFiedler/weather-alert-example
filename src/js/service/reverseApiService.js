@@ -26,13 +26,13 @@ function reverseApiService($http, $q, reverseApiUrl, apiUrlBuilder) {
              reverseApiUrl,
              {
                prox: params.join("%2C"),
-               mode: "retrieveAreas"
-               level: "city", // not sure but you get countries as well, do not understand the meaning if this param
+               mode: "retrieveAreas",
+               level: "city", // not sure but you get result on country level as well, do not understand the meaning if this param
                maxResults: "10",
                gen: "8", // you won't get more than 1 result if you use the most recent version of this resource
-               locationattributes: "address", // you get additional aatributes as well, maybe you can dismiss them
+               locationattributes: "address", // you get additional aatributes as well, maybe you can not dismiss them - not sure yet
                jsoncallback: "JSON_CALLBACK",
-               app_id: "hzVubB90T6SNl96pONJv", // these credential won't work with the weather API
+               app_id: "hzVubB90T6SNl96pONJv", // these credentials won't work with the weather API
                app_code: "_iFKMR3GnrYLzj-iMOOLGA" // no idea why
              }),
       method: 'JSONP'
